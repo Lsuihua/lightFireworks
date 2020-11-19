@@ -16,6 +16,6 @@ class Game{
   start(){
     setInterval(() => {
       new Shoot();
-    },500)
+    },2000)
   }
 }

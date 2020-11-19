@@ -9,7 +9,7 @@ class Shoot{
     this.dy = Math.floor(Math.random() * 3 + 3);
     this.r =  Math.floor(Math.random() * 5) + 5;
     this.color = `rgba(${Math.random() * 256},${Math.random() * 256},${Math.random() * 256},${Math.random()* 0.4 + 0.6})`
-    this.timer = null;
+    this.stimer = null;
 
     game.shootList.push(this);
     this.start();
@@ -20,17 +20,19 @@ class Shoot{
 
     if(this.sy < this.ey){
       // 到达终点  爆炸
+      for(let i =0;i<60;i++){
+        new Explosion({x:this.sx,y:this.sy,color:this.color});
+      }
       return this.destroy();
     }
   }
 
   destroy(){
-    console.log("销毁")
     game.shootList.map((item,index,arr) => {
       if(item == this){
         arr.splice(index,1);
-        clearInterval(this.timer);
-        this.tiemr = null;
+        clearInterval(this.stimer);
+        this.stimer = null;
       }
     })
   }
@@ -56,7 +58,7 @@ class Shoot{
   }
 
   start(){
-    this.timer = setInterval(()=>{
+    this.stimer = setInterval(()=>{
       this.animate();
     },20)
   }
