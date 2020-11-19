@@ -6,13 +6,11 @@ class Shoot{
     this.ey = Math.floor(Math.random() * game.height*0.2 + game.height*0.2);
     
     this.dx = Math.floor(Math.random() * 6 - 3);
-    this.dy = Math.floor(Math.random() * 3 + 3);
+    this.dy = Math.floor(Math.random() * 6 + 3);
     this.r =  Math.floor(Math.random() * 5) + 5;
-    this.color = `rgba(${Math.random() * 256},${Math.random() * 256},${Math.random() * 256},${Math.random()* 0.4 + 0.6})`
-    this.stimer = null;
+    this.color = `rgba(${Math.random() * 256},${Math.random() * 256},${Math.random() * 256},${Math.random()* 0.4 + 0.6})`;
 
     game.shootList.push(this);
-    this.start();
   }
 
   update(){
@@ -21,7 +19,10 @@ class Shoot{
     if(this.sy < this.ey){
       // 到达终点  爆炸
       for(let i =0;i<60;i++){
-        new Explosion({x:this.sx,y:this.sy,color:this.color});
+        var ep = new Explosion({x:this.sx,y:this.sy,color:this.color});
+        if(game.epTimer == null){
+          ep.start();
+        }
       }
       return this.destroy();
     }
@@ -31,8 +32,6 @@ class Shoot{
     game.shootList.map((item,index,arr) => {
       if(item == this){
         arr.splice(index,1);
-        clearInterval(this.stimer);
-        this.stimer = null;
       }
     })
   }
@@ -58,7 +57,7 @@ class Shoot{
   }
 
   start(){
-    this.stimer = setInterval(()=>{
+    game.timer = setInterval(()=>{
       this.animate();
     },20)
   }

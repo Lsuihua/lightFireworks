@@ -11,11 +11,16 @@ class Game{
     // 烟花盒子
     this.explosionList = [];
 
+    this.timer = null;
+    this.epTimer = null;
+
   }
 
   start(){
     setInterval(() => {
-      new Shoot();
+      var shoot = new Shoot();
+      if(this.timer) return;
+      shoot.start()
     },2000)
   }
 }

@@ -6,15 +6,12 @@ class Explosion{
     this.r = Math.random() * 2 +1;
     this.x = options.x;
     this.y = options.y;
-    this.dx = Math.random() * 1 - 0.5;
-    this.dy = Math.random() * 1 - 0.5;
-    this.dr = Math.random() * 0.01;
+    this.dx = Math.random() * 2 -1;
+    this.dy = Math.random() * 2 - 1;
+    this.dr = Math.random() * 0.06;
     this.color = options.color;
-    this.etimer = null;
     
     game.explosionList.push(this);
-
-    this.animate();
   }
 
   update(){
@@ -31,8 +28,6 @@ class Explosion{
     game.explosionList.map((item,index,arr) => {
       if(item == this){
         arr.splice(index,1);
-        clearInterval(this.etimer);
-        this.etimer = null;
       }
     })
   }
@@ -47,9 +42,9 @@ class Explosion{
     game.ctx.restore();
   }
 
-  animate(){
-    this.etimer = setInterval(() => {
-      // game.ctx.clearRect(0,0,game.width,game.height);
+  start(ref){
+    console.log("爆炸定时器")
+    game.epTimer = setInterval(() => {
       for(let i =0;i<game.explosionList.length;i++){
         game.explosionList[i].update();
         game.explosionList[i] && game.explosionList[i].render();
